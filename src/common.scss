@@ -1,0 +1,33 @@
+$breakpoint-mobile: 740px; // mobile
+$breakpoint-tablet: 1280px; // tablet
+
+// default colors
+$normalBackground-color: #262c3a;
+$deepBackground-color: #1c222e;
+$text-color-01: white;
+$point-color-01: #713bda;
+$point-color-02: #ff735c;
+
+@mixin font-en {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+}
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// responsive size
+@mixin mobile {
+  @media screen and (max-width: #{$breakpoint-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
