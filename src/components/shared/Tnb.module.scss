@@ -1,0 +1,81 @@
+@import '../../common.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include mobile {
+    position: fixed;
+    bottom: -10%;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in;
+    background-color: $deepBackground-color;
+
+    &.on {
+      bottom: 0;
+    }
+  }
+
+  > .count {
+    font-size: 1rem;
+    color: $text-color-01;
+    font-weight: 400;
+    margin-right: 1rem;
+    white-space: nowrap;
+
+    > .point {
+      font-size: 2rem;
+      padding-right: 5px;
+    }
+
+    > br {
+      display: none;
+
+      @include mobile {
+        display: block;
+      }
+    }
+  }
+
+  > .inner {
+    width: 100%;
+    max-width: 20rem;
+
+    > .search {
+      @include flexCenter;
+      background-color: #fff;
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      box-sizing: border-box;
+      width: 100%;
+
+      > input {
+        width: 80%;
+        border: 0;
+        padding: 0.5rem;
+        font-size: 1rem;
+
+        &::placeholder {
+          color: $point-color-01;
+        }
+      }
+
+      > .submit {
+        @include flexCenter;
+        width: 20%;
+        border: 0;
+        background-color: $point-color-01;
+        color: $text-color-01;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

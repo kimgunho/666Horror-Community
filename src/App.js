@@ -6,6 +6,7 @@ import { links } from './links';
 import styles from './App.module.scss';
 
 import Header from './components/shared/Header';
+import Tnb from './components/shared/Tnb';
 import Home from './pages/Home';
 
 const cx = classNames.bind(styles);
@@ -16,6 +17,7 @@ function App() {
       <div className={cx('wrapper')}>
         <Header />
         <div className={cx('content')}>
+          <Tnb />
           <Routes>
             <Route path={links.home} element={<Home />} />
             <Route
