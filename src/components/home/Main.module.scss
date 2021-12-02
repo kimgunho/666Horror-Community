@@ -1,0 +1,62 @@
+@import '../../common.scss';
+
+.container {
+  max-width: 90rem;
+  margin: 2rem 0;
+
+  > .slideBox {
+    .slide {
+      @include backgroundCenter;
+      border-radius: 2rem;
+      padding: 3rem;
+      box-sizing: border-box;
+      min-height: 50vh;
+      box-shadow: inset 8rem 8rem 30rem rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: flex-end;
+
+      @include mobile {
+        min-height: 15rem;
+        box-shadow: inset 20rem 8rem 8rem rgba(0, 0, 0, 0.5);
+      }
+
+      > .info {
+        > .movieTitle {
+          @include font-en;
+          color: $text-color-01;
+          font-size: 1.25rem;
+          padding-bottom: 1rem;
+        }
+
+        > .reviewTitle {
+          color: $text-color-01;
+          font-size: 2rem;
+          font-weight: 400;
+          padding-bottom: 1em;
+        }
+
+        > .text {
+          color: $text-color-01;
+          font-size: 1rem;
+          line-height: 1.5;
+          max-width: 30rem;
+          text-shadow: 2px 2px 1rem #000;
+        }
+      }
+    }
+
+    > .pagination {
+      position: absolute;
+      width: auto;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 10;
+      display: flex;
+      justify-content: flex-end;
+
+      > .bullet {
+        @include bulletDefault;
+      }
+    }
+  }
+}
