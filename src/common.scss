@@ -5,8 +5,10 @@ $breakpoint-tablet: 1280px; // tablet
 $normalBackground-color: #262c3a;
 $deepBackground-color: #1c222e;
 $text-color-01: white;
+$text-color-02: #ccc;
 $point-color-01: #713bda;
 $point-color-02: #ff735c;
+$bullet-color: gray;
 
 @mixin font-en {
   font-family: 'Montserrat', sans-serif;
@@ -19,6 +21,25 @@ $point-color-02: #ff735c;
   align-items: center;
 }
 
+@mixin backgroundCenter {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+@mixin bulletDefault {
+  margin-left: 1rem;
+  cursor: pointer;
+  width: 1.5rem;
+  border-radius: 0.5rem;
+  height: 0.35rem;
+  background-color: $bullet-color;
+  text-indent: -9999px;
+
+  &.active {
+    background-color: $point-color-01;
+  }
+}
 // responsive size
 @mixin mobile {
   @media screen and (max-width: #{$breakpoint-mobile}) {
