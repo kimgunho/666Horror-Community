@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-import { UseUserAuth } from '../../context/authContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
 import Modal from './Modal';
@@ -16,13 +15,13 @@ function Form() {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const [onDisplay, setOndisplay] = useState(false);
-  const { setIsLogin } = UseUserAuth();
 
   const onChange = (event) => {
     const {
       target: { name, value },
     } = event;
 
+    // RE-폼에 대한 고민
     switch (name) {
       case 'email':
         setEmail(value);
@@ -35,12 +34,11 @@ function Form() {
     }
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
 
-    await signInWithEmailAndPassword(auth, email, pw)
+    createUserWithEmailAndPassword(auth, email, pw)
       .then(() => {
-        setIsLogin(auth.currentUser);
         setOndisplay(true);
       })
       .catch((err) => {
@@ -52,12 +50,12 @@ function Form() {
     <>
       <div className={cx('container')}>
         <form onSubmit={onSubmit}>
-          <h3 className={cx('title')}>Login</h3>
+          <h3 className={cx('title')}>Sign in</h3>
           <ul className={cx('formList')}>
             <li>
               <input
                 name="email"
-                type="text"
+                type="email"
                 className={cx('id')}
                 placeholder="email"
                 required
@@ -80,11 +78,15 @@ function Form() {
             <li>
               <ul>
                 <li>
-                  <input type="submit" value="login" className={cx('submit')} />
+                  <input
+                    type="submit"
+                    value="sign in"
+                    className={cx('submit')}
+                  />
                 </li>
                 <li>
-                  <Link to={links.signin} className={cx('sign')}>
-                    sign in
+                  <Link to={links.login} className={cx('sign')}>
+                    login
                   </Link>
                 </li>
               </ul>
@@ -92,10 +94,11 @@ function Form() {
           </ul>
         </form>
       </div>
+
       <Modal
         on={onDisplay}
-        text={'로그인이 완료되었습니다.'}
-        link={links.home}
+        text={'가입해주셔서 감사합니다. 가입이 완료되었습니다.'}
+        link={links.login}
       />
     </>
   );

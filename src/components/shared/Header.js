@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, NavLink } from 'react-router-dom';
-import { FiAlignLeft, FiX } from 'react-icons/fi';
+import { FiAlignLeft, FiX, FiLogIn, FiLogOut } from 'react-icons/fi';
+import { signOut } from 'firebase/auth';
 
+import { UseUserAuth } from '../../context/authContext';
 import { links } from '../../links';
+import { auth } from '../../firebase';
 import gnb from '../../assets/data/gnb';
 import styles from './Header.module.scss';
 
@@ -13,6 +16,18 @@ const cx = classNames.bind(styles);
 
 function Header() {
   const [toggle, setToggle] = useState(false);
+  const { isLogin, setIsLogin } = UseUserAuth();
+
+  const onLogOut = () => {
+    // event.preventDefault();
+    signOut(auth)
+      .then(() => {
+        setIsLogin(auth.currentUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <header className={cx('header')}>
@@ -41,6 +56,28 @@ function Header() {
             </NavLink>
           </li>
         ))}
+        {!isLogin ? (
+          <li>
+            <NavLink
+              className={({ isActive }) => (isActive ? cx('active') : '')}
+              to={links.login}
+            >
+              <span className={cx('icon')}>
+                <FiLogIn />
+              </span>
+              <span className={cx('title')}>Login</span>
+            </NavLink>
+          </li>
+        ) : (
+          <li>
+            <NavLink to={links.home} onClick={onLogOut}>
+              <span className={cx('icon')}>
+                <FiLogOut />
+              </span>
+              <span className={cx('title')}>Log Out</span>
+            </NavLink>
+          </li>
+        )}
       </ul>
     </header>
   );

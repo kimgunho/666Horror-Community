@@ -1,13 +1,7 @@
 import React from 'react';
 import { links } from '../../links';
 
-import {
-  FiFileText,
-  FiFilm,
-  FiMessageCircle,
-  // FiLogOut,
-  FiLogIn,
-} from 'react-icons/fi';
+import { FiFileText, FiFilm, FiMessageCircle } from 'react-icons/fi';
 
 const gnb = [
   {
@@ -24,11 +18,6 @@ const gnb = [
     title: 'Community',
     link: links.community,
     icon: <FiMessageCircle />,
-  },
-  {
-    title: 'Login',
-    link: links.login,
-    icon: <FiLogIn />,
   },
 ];
 
