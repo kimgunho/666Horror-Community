@@ -4,5 +4,6 @@ export const links = {
   movies: '/movies',
   community: '/community',
   login: '/login',
+  signin: '/signin',
   notFound: '*',
 };

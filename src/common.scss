@@ -15,6 +15,27 @@ $bullet-color: gray;
   letter-spacing: 1px;
 }
 
+@mixin button {
+  cursor: pointer;
+  border-radius: 0 1rem;
+  border: 0;
+  color: $text-color-01;
+  font-size: 1rem;
+  text-transform: capitalize;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    border-radius: 1rem 0;
+  }
+}
+
+@mixin limiter {
+  width: 100%;
+  max-width: $breakpoint-tablet;
+}
+
 @mixin flexCenter {
   display: flex;
   justify-content: center;

@@ -68,7 +68,7 @@
 - Horror Movies : 공포영화들의 리스트 입니다.
 - Community : 커뮤니티 페이지이며 서브 페이지로 with Talk, with Watch, Question으로 구분될 예정입니다.
 - Search : 검색 결과 페이지입니다.
-- Login / Logout / Sign in [고민중] : 현재 어떻게 진행될 것인지 확정이 되지 않았습니다.
+- Login / Logout / Sign in : firebase를 이용하여 로그인 기능을 구현할 예정입니다.
 
 ## 사용될 api
 
@@ -77,7 +77,18 @@
 2. json-server : 리뷰, 커뮤니티등의 사용될 목적의 api입니다. 해당 프로젝트만을 위해 사용될 가상의 json입니다.
    로그인 기능에도 사용할지 현재 고민중입니다.
 
-## 페이지별 구상기획 1 (Page -> Home)
+## 페이지별 구상기획 1 (Page -> Auth)
+
+### Login / 로그인 <br />
+
+**컨셉** : <br />
+firebase를 이용하여 로그인 기능을 구현할 예정입니다.
+
+**구현** : <br />
+
+**문제사항** : <br />
+
+## 페이지별 구상기획 2 (Page -> Home)
 
 ### 1. MainVisual - Carousel / 메인비주얼 캐로셀 <br />
 
