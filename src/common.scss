@@ -1,0 +1,75 @@
+$breakpoint-mobile: 740px; // mobile
+$breakpoint-tablet: 1280px; // tablet
+
+// default colors
+$normalBackground-color: #262c3a;
+$deepBackground-color: #1c222e;
+$text-color-01: white;
+$text-color-02: #ccc;
+$point-color-01: #713bda;
+$point-color-02: #ff735c;
+$bullet-color: gray;
+
+@mixin font-en {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+}
+
+@mixin button {
+  cursor: pointer;
+  border-radius: 0 1rem;
+  border: 0;
+  color: $text-color-01;
+  font-size: 1rem;
+  text-transform: capitalize;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    border-radius: 1rem 0;
+  }
+}
+
+@mixin limiter {
+  width: 100%;
+  max-width: $breakpoint-tablet;
+}
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin backgroundCenter {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+@mixin bulletDefault {
+  margin-left: 1rem;
+  cursor: pointer;
+  width: 1.5rem;
+  border-radius: 0.5rem;
+  height: 0.35rem;
+  background-color: $bullet-color;
+  text-indent: -9999px;
+
+  &.active {
+    background-color: $point-color-01;
+  }
+}
+// responsive size
+@mixin mobile {
+  @media screen and (max-width: #{$breakpoint-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}

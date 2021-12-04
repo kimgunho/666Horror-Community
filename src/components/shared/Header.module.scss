@@ -1,0 +1,136 @@
+@import '../../common.scss';
+
+.header {
+  width: 14rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+
+  @include tablet {
+    width: 5rem;
+  }
+
+  @include mobile {
+    background-color: $deepBackground-color;
+    width: 100%;
+    right: 0;
+    bottom: unset;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  > .logo {
+    margin-top: 2rem;
+
+    @include mobile {
+      margin: 0;
+      padding: 1rem;
+    }
+
+    > a {
+      @include flexCenter;
+      flex-direction: column;
+      text-align: center;
+
+      > img {
+        width: 100%;
+        max-width: 7rem;
+
+        @include tablet {
+          max-width: 3rem;
+        }
+      }
+
+      > .title {
+        color: $text-color-01;
+        font-size: 1rem;
+        line-height: 1.5;
+        letter-spacing: 1px;
+        padding-top: 0.5em;
+
+        @include tablet {
+          display: none;
+        }
+      }
+    }
+  }
+
+  > .mobileBtn {
+    display: none;
+
+    @include mobile {
+      display: block;
+      padding: 1rem;
+      cursor: pointer;
+      color: $text-color-01;
+    }
+  }
+
+  > .gnb {
+    background-color: $deepBackground-color;
+    border-radius: 0 2rem 0 0;
+    margin-top: 2rem;
+    padding: 2rem;
+    box-sizing: border-box;
+
+    @include tablet {
+      padding: 1rem;
+      height: 100%;
+    }
+
+    @include mobile {
+      position: fixed;
+      left: -100%;
+      top: 0;
+      bottom: 0;
+      z-index: 11;
+      margin: 0;
+      width: calc(100% - 60px);
+      transition: all 0.2s ease-in;
+
+      &.on {
+        left: 0;
+      }
+    }
+
+    > li {
+      &:last-child {
+        margin-top: 4rem;
+      }
+
+      > a {
+        @include flexCenter;
+        justify-content: flex-start;
+        color: $text-color-01;
+        padding: 1rem 0;
+
+        &.active {
+          color: $point-color-02;
+        }
+
+        > .icon {
+          @include flexCenter;
+          padding-right: 1rem;
+          font-size: 1.25rem;
+        }
+
+        > .title {
+          @include font-en;
+          font-size: 0.9rem;
+
+          @include tablet {
+            display: none;
+          }
+
+          @include mobile {
+            display: block;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
