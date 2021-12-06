@@ -10,8 +10,8 @@ import styles from './App.module.scss';
 import Header from './components/shared/Header';
 import Tnb from './components/shared/Tnb';
 import Home from './pages/Home';
-import Login from './components/Auth/Form';
-import Sign from './components/Auth/Sign';
+import Login from './components/auth/Form';
+import Sign from './components/auth/Sign';
 
 const cx = classNames.bind(styles);
 

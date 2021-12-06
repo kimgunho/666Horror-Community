@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames/bind';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
 import { Autoplay, Pagination, EffectFade } from 'swiper';
