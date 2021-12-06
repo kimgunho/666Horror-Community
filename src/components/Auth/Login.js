@@ -6,17 +6,18 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { UseUserAuth } from '../../context/authContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
-import Modal from './Modal';
+import Modal from '../shared/Modal';
+import Dimmed from '../shared/Dimmed';
 
 import styles from './Auth.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Form() {
+function Login() {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
-  const [onDisplay, setOndisplay] = useState(false);
-  const { setIsLogin } = UseUserAuth();
+  const [show, setShow] = useState(false);
+  const { setLoginObject } = UseUserAuth();
 
   const onChange = (event) => {
     const {
@@ -40,8 +41,8 @@ function Form() {
 
     await signInWithEmailAndPassword(auth, email, pw)
       .then(() => {
-        setIsLogin(auth.currentUser);
-        setOndisplay(true);
+        setLoginObject(auth.currentUser);
+        setShow(true);
       })
       .catch((err) => {
         console.log(err);
@@ -93,12 +94,14 @@ function Form() {
         </form>
       </div>
       <Modal
-        on={onDisplay}
+        show={show}
         text={'로그인이 완료되었습니다.'}
         link={links.home}
+        btnText={'메인으로 이동'}
       />
+      <Dimmed show={show} />
     </>
   );
 }
 
-export default Form;
+export default Login;

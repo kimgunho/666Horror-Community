@@ -12,7 +12,7 @@
   z-index: 15;
   display: none;
 
-  &.on {
+  &.show {
     display: block;
   }
 
@@ -26,20 +26,5 @@
     @include button;
     margin-top: 1rem;
     background-color: $point-color-02;
-  }
-}
-
-.blackPanal {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 11;
-  display: none;
-
-  &.on {
-    display: block;
   }
 }

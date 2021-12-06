@@ -5,7 +5,7 @@ import { Autoplay, Pagination, EffectFade } from 'swiper';
 import 'swiper/swiper.scss';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
-import styles from './Main.module.scss';
+import styles from './Banner.module.scss';
 
 const cx = classNames.bind(styles);
 

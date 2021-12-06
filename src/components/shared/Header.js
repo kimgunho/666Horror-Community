@@ -16,13 +16,13 @@ const cx = classNames.bind(styles);
 
 function Header() {
   const [toggle, setToggle] = useState(false);
-  const { isLogin, setIsLogin } = UseUserAuth();
+  const { loginObject, setLoginObject } = UseUserAuth();
 
-  const onLogOut = () => {
+  const handleLogOut = () => {
     // event.preventDefault();
     signOut(auth)
       .then(() => {
-        setIsLogin(auth.currentUser);
+        setLoginObject(auth.currentUser);
       })
       .catch((err) => {
         console.log(err);
@@ -56,7 +56,7 @@ function Header() {
             </NavLink>
           </li>
         ))}
-        {!isLogin ? (
+        {!loginObject ? (
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? cx('active') : '')}
@@ -70,7 +70,7 @@ function Header() {
           </li>
         ) : (
           <li>
-            <NavLink to={links.home} onClick={onLogOut}>
+            <NavLink to={links.home} onClick={handleLogOut}>
               <span className={cx('icon')}>
                 <FiLogOut />
               </span>

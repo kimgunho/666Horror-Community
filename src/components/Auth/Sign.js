@@ -5,7 +5,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { links } from '../../links';
 import { auth } from '../../firebase';
-import Modal from './Modal';
+import Modal from '../shared/Modal';
+import Dimmed from '../shared/Dimmed';
 
 import styles from './Auth.module.scss';
 
@@ -14,7 +15,9 @@ const cx = classNames.bind(styles);
 function Form() {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
-  const [onDisplay, setOndisplay] = useState(false);
+  const [name, setName] = useState('');
+  const [profileSrc, setProfileSrc] = useState('');
+  const [show, setShow] = useState(false);
 
   const onChange = (event) => {
     const {
@@ -29,6 +32,13 @@ function Form() {
       case 'pw':
         setPw(value);
         break;
+      case 'name':
+        setName(value);
+        break;
+      case 'profileImage':
+        setProfileSrc(value);
+        break;
+
       default:
         console.log('err');
     }
@@ -39,7 +49,7 @@ function Form() {
 
     createUserWithEmailAndPassword(auth, email, pw)
       .then(() => {
-        setOndisplay(true);
+        setShow(true);
       })
       .catch((err) => {
         console.log(err);
@@ -76,6 +86,25 @@ function Form() {
               />
             </li>
             <li>
+              <input
+                name="name"
+                type="text"
+                className={cx('name')}
+                placeholder="nickName"
+                value={name}
+                onChange={onChange}
+              />
+            </li>
+            <li>
+              <input
+                name="profileImage"
+                type="file"
+                className={cx('profile')}
+                value={profileSrc}
+                onChange={onChange}
+              />
+            </li>
+            <li>
               <ul>
                 <li>
                   <input
@@ -96,10 +125,12 @@ function Form() {
       </div>
 
       <Modal
-        on={onDisplay}
+        show={show}
         text={'가입해주셔서 감사합니다. 가입이 완료되었습니다.'}
         link={links.login}
+        btnText={'로그인 페이지로 이동'}
       />
+      <Dimmed show={show} />
     </>
   );
 }

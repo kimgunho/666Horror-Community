@@ -2,12 +2,12 @@ import React from 'react';
 
 import HOME_TEMP_DATA from '../assets/data/homeTemp';
 
-import Main from '../components/home/Main';
+import Banner from '../components/home/Banner';
 
 function Home() {
   return (
     <>
-      <Main data={HOME_TEMP_DATA} />
+      <Banner data={HOME_TEMP_DATA} />
     </>
   );
 }

@@ -6,7 +6,7 @@ import styles from './Modal.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Modal({ on, text, link }) {
+function Modal({ show, text, link, btnText }) {
   const navigate = useNavigate();
 
   const onPageLocation = () => {
@@ -15,14 +15,12 @@ function Modal({ on, text, link }) {
 
   return (
     <>
-      <div className={cx(['modal', { on }])}>
+      <div className={cx(['modal', { show }])}>
         <p className={cx('text')}>{text}</p>
         <button className={cx('submit')} onClick={onPageLocation}>
-          확인
+          {btnText}
         </button>
       </div>
-      <div className={cx(['blackPanal', { on }])} />
-      {/* dimmed */}
     </>
   );
 }

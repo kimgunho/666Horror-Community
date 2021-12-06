@@ -10,7 +10,7 @@ import styles from './App.module.scss';
 import Header from './components/shared/Header';
 import Tnb from './components/shared/Tnb';
 import Home from './pages/Home';
-import Login from './components/auth/Form';
+import Login from './components/auth/Login';
 import Sign from './components/auth/Sign';
 
 const cx = classNames.bind(styles);
@@ -27,6 +27,7 @@ function App() {
               <Route path={links.home} element={<Home />} />
               <Route path={links.login} element={<Login />} />
               <Route path={links.signin} element={<Sign />} />
+
               <Route
                 path={links.notFound}
                 element={

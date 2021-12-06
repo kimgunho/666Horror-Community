@@ -5,19 +5,19 @@ import { onAuthStateChanged } from 'firebase/auth';
 const user = createContext();
 
 export const UserAuthProvider = ({ children }) => {
-  const [isLogin, setIsLogin] = useState(undefined);
+  const [loginObject, setLoginObject] = useState(undefined);
   onAuthStateChanged(auth, (user) => {
-    setIsLogin(user);
+    setLoginObject(user);
   });
 
   return (
     <user.Provider
       value={{
-        isLogin,
-        setIsLogin,
+        loginObject,
+        setLoginObject,
       }}
     >
-      {isLogin === undefined ? null : children}
+      {loginObject === undefined ? null : children}
     </user.Provider>
   );
 };
