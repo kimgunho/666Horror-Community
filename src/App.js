@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { links } from './links';
 import { UserAuthProvider } from './context/authContext';
+import { CurrentModalProvider } from './context/modalContext';
 
 import styles from './App.module.scss';
 
@@ -17,30 +18,32 @@ const cx = classNames.bind(styles);
 
 function App() {
   return (
-    <UserAuthProvider>
-      <BrowserRouter>
-        <div className={cx('wrapper')}>
-          <Header />
-          <div className={cx('content')}>
-            <Tnb />
-            <Routes>
-              <Route path={links.home} element={<Home />} />
-              <Route path={links.login} element={<Login />} />
-              <Route path={links.signin} element={<Sign />} />
+    <CurrentModalProvider>
+      <UserAuthProvider>
+        <BrowserRouter>
+          <div className={cx('wrapper')}>
+            <Header />
+            <div className={cx('content')}>
+              <Tnb />
+              <Routes>
+                <Route path={links.home} element={<Home />} />
+                <Route path={links.login} element={<Login />} />
+                <Route path={links.signin} element={<Sign />} />
 
-              <Route
-                path={links.notFound}
-                element={
-                  <div className={cx('notFound')}>
-                    존재하지 않는 페이지입니다.
-                  </div>
-                }
-              />
-            </Routes>
+                <Route
+                  path={links.notFound}
+                  element={
+                    <div className={cx('notFound')}>
+                      존재하지 않는 페이지입니다.
+                    </div>
+                  }
+                />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
-    </UserAuthProvider>
+        </BrowserRouter>
+      </UserAuthProvider>
+    </CurrentModalProvider>
   );
 }
 

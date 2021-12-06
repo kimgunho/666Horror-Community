@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { UseUserAuth } from '../../context/authContext';
+import { UseCurrentModal } from '../../context/modalContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
 import Modal from '../shared/Modal';
@@ -16,8 +18,11 @@ const cx = classNames.bind(styles);
 function Login() {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
-  const [show, setShow] = useState(false);
+  const [modalMessage, setModalMessage] = useState(null);
+  const [linkResult, setLinkResult] = useState(null);
+
   const { setLoginObject } = UseUserAuth();
+  const { show, setShow } = UseCurrentModal();
 
   const onChange = (event) => {
     const {
@@ -36,16 +41,39 @@ function Login() {
     }
   };
 
-  const onSubmit = async (event) => {
+  const navigate = useNavigate();
+  let redirect;
+
+  const onSubmit = (event) => {
     event.preventDefault();
 
-    await signInWithEmailAndPassword(auth, email, pw)
+    signInWithEmailAndPassword(auth, email, pw)
       .then(() => {
         setLoginObject(auth.currentUser);
-        setShow(true);
+        redirect = links.home;
       })
       .catch((err) => {
-        console.log(err);
+        redirect = links.login;
+        setShow(true);
+        setLinkResult(links.login);
+
+        switch (err.code) {
+          case 'auth/wrong-password':
+            setModalMessage('비밀번호가 정확하지 않습니다.');
+            break;
+          case 'auth/user-not-found':
+            setModalMessage('사용자를 찾을수가 없습니다.');
+            break;
+          case 'auth/invalid-email':
+            setModalMessage('잘못된 형식입니다.');
+            break;
+
+          default:
+            alert(`${err} 재접속을 해주세요.`);
+        }
+      })
+      .finally(() => {
+        navigate(redirect);
       });
   };
 
@@ -95,9 +123,9 @@ function Login() {
       </div>
       <Modal
         show={show}
-        text={'로그인이 완료되었습니다.'}
-        link={links.home}
-        btnText={'메인으로 이동'}
+        text={modalMessage}
+        link={linkResult}
+        btnText={'확인'}
       />
       <Dimmed show={show} />
     </>
