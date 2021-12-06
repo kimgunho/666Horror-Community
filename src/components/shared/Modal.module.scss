@@ -1,15 +1,17 @@
 @import '../../common.scss';
 
 .modal {
+  border-radius: 0 1rem;
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: $point-color-01;
-  padding: 2rem 5rem;
+  background-color: $modal-background-color;
+  padding: 1.5rem 6rem;
   box-sizing: border-box;
   text-align: center;
   z-index: 15;
+  border: 3px solid $point-color-02;
   display: none;
 
   &.show {
@@ -17,14 +19,12 @@
   }
 
   > .text {
-    color: $text-color-01;
-    font-size: 1.25rem;
-    font-weight: 400;
+    color: $text-color-02;
+    font-size: 1.125rem;
+    font-weight: 500;
   }
 
   > .submit {
     @include button;
-    margin-top: 1rem;
-    background-color: $point-color-02;
   }
 }

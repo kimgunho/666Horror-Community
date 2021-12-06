@@ -38,6 +38,7 @@
 
             > .submit {
               @include button;
+              color: $text-color-01;
               background-color: $point-color-01;
 
               &:hover {
@@ -47,6 +48,7 @@
 
             > .sign {
               @include button;
+              color: $text-color-01;
               display: block;
               background-color: gray;
 

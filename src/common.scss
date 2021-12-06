@@ -6,9 +6,11 @@ $normalBackground-color: #262c3a;
 $deepBackground-color: #1c222e;
 $text-color-01: white;
 $text-color-02: #ccc;
+$text-color-03: #333;
 $point-color-01: #713bda;
 $point-color-02: #ff735c;
 $bullet-color: gray;
+$modal-background-color: #3c4656;
 
 @mixin font-en {
   font-family: 'Montserrat', sans-serif;
@@ -19,16 +21,14 @@ $bullet-color: gray;
   cursor: pointer;
   border-radius: 0 1rem;
   border: 0;
-  color: $text-color-01;
+  color: $text-color-03;
   font-size: 1rem;
   text-transform: capitalize;
   padding: 0.5rem 1rem;
   box-sizing: border-box;
   transition: all 0.2s ease-in;
-
-  &:hover {
-    border-radius: 1rem 0;
-  }
+  margin-top: 1rem;
+  background-color: $text-color-02;
 }
 
 @mixin limiter {
