@@ -16,14 +16,13 @@ const cx = classNames.bind(styles);
 
 function Header() {
   const [toggle, setToggle] = useState(false);
-  const { loginObject, setLoginObject, setNickName } = UseUserAuth();
+  const { loginObject, setLoginObject } = UseUserAuth();
 
   const handleLogOut = () => {
     signOut(auth)
       .then(() => {
         const user = auth.currentUser;
         setLoginObject(user);
-        setNickName(null);
       })
       .catch((err) => {
         console.log(err);

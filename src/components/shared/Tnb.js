@@ -2,9 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import classNames from 'classnames/bind';
 import { FiSearch } from 'react-icons/fi';
 
-import { auth } from '../../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-
 import styles from './Tnb.module.scss';
 
 const cx = classNames.bind(styles);
@@ -12,11 +9,10 @@ const cx = classNames.bind(styles);
 function Tnb() {
   const [scrollY, setScrollY] = useState(window.scrollY);
   const [scrollActive, setScrollActive] = useState(true);
-  const [nickName, setNickName] = useState(null);
 
   const handleNavigation = useCallback(
-    (e) => {
-      const window = e.currentTarget;
+    (event) => {
+      const window = event.currentTarget;
       if (scrollY > window.scrollY) {
         setScrollActive(true);
       } else if (scrollY < window.scrollY) {
@@ -36,20 +32,9 @@ function Tnb() {
     };
   }, [handleNavigation]);
 
-  useEffect(() => {
-    if (auth.currentUser !== null) {
-      onAuthStateChanged(auth, (user) => {
-        setNickName(user.displayName);
-      });
-    } else {
-      setNickName(null);
-    }
-  }, [auth.currentUser]);
-
   return (
     <div className={cx(['container', { on: scrollActive }])}>
       <p className={cx('count')}>
-        {nickName !== null ? `${nickName}님 ` : ''}
         <span className={cx('point')}>+ 999</span>
         <br />
         개의 리뷰가 올라왔어요!

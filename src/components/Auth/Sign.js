@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 import { UseCurrentModal } from '../../context/modalContext';
-import { UseUserAuth } from '../../context/authContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
 import Modal from '../shared/Modal';
@@ -24,7 +23,6 @@ function Form() {
   const [linkResult, setLinkResult] = useState(null);
 
   const { show, setShow } = UseCurrentModal();
-  const { setNickName } = UseUserAuth();
 
   const onChange = (event) => {
     const {
@@ -58,17 +56,17 @@ function Form() {
 
     if (pw === pwCheck) {
       createUserWithEmailAndPassword(auth, email, pw)
-        .then(() => {
-          const user = auth.currentUser;
+        .then((userCredential) => {
+          const user = userCredential.user;
+
           updateProfile(user, {
             displayName: displayName,
           })
-            .then(() => {
-              setNickName(user.displayName);
-            })
+            .then(() => {})
             .catch((err) => {
               console.dir(err);
             });
+
           redirect = links.home;
         })
         .catch((err) => {
@@ -78,6 +76,8 @@ function Form() {
           setLinkResult(links.signin);
           if (err.code === 'auth/email-already-in-use') {
             setModalMessage('이미 사용중인 이메일입니다.');
+          } else if (err.code === 'auth/invalid-email') {
+            setModalMessage('적합하지 않는 이메일입니다');
           }
         })
         .finally(() => {
