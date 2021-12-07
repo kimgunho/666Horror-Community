@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
+import { UseCurrentModal } from '../../context/modalContext';
+import { UseUserAuth } from '../../context/authContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
 import Modal from '../shared/Modal';
@@ -15,16 +18,19 @@ const cx = classNames.bind(styles);
 function Form() {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
-  const [name, setName] = useState('');
-  const [profileSrc, setProfileSrc] = useState('');
-  const [show, setShow] = useState(false);
+  const [pwCheck, setPwCheck] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [modalMessage, setModalMessage] = useState(null);
+  const [linkResult, setLinkResult] = useState(null);
+
+  const { show, setShow } = UseCurrentModal();
+  const { setNickName } = UseUserAuth();
 
   const onChange = (event) => {
     const {
       target: { name, value },
     } = event;
 
-    // RE-폼에 대한 고민
     switch (name) {
       case 'email':
         setEmail(value);
@@ -32,11 +38,11 @@ function Form() {
       case 'pw':
         setPw(value);
         break;
-      case 'name':
-        setName(value);
+      case 'pwCheck':
+        setPwCheck(value);
         break;
-      case 'profileImage':
-        setProfileSrc(value);
+      case 'name':
+        setDisplayName(value);
         break;
 
       default:
@@ -44,16 +50,44 @@ function Form() {
     }
   };
 
+  const navigate = useNavigate();
+  let redirect;
+
   const onSubmit = (event) => {
     event.preventDefault();
 
-    createUserWithEmailAndPassword(auth, email, pw)
-      .then(() => {
-        setShow(true);
-      })
-      .catch((err) => {
-        console.dif(err);
-      });
+    if (pw === pwCheck) {
+      createUserWithEmailAndPassword(auth, email, pw)
+        .then(() => {
+          const user = auth.currentUser;
+          updateProfile(user, {
+            displayName: displayName,
+          })
+            .then(() => {
+              setNickName(user.displayName);
+            })
+            .catch((err) => {
+              console.dir(err);
+            });
+          redirect = links.home;
+        })
+        .catch((err) => {
+          console.dir(err.code);
+          setShow(true);
+          redirect = links.signin;
+          setLinkResult(links.signin);
+          if (err.code === 'auth/email-already-in-use') {
+            setModalMessage('이미 사용중인 이메일입니다.');
+          }
+        })
+        .finally(() => {
+          navigate(redirect);
+        });
+    } else {
+      setLinkResult(links.signin);
+      setModalMessage('비밀번호 중복체크를 다시 부탁드리겠습니다.');
+      setShow(true);
+    }
   };
 
   return (
@@ -87,20 +121,24 @@ function Form() {
             </li>
             <li>
               <input
-                name="name"
-                type="text"
-                className={cx('name')}
-                placeholder="nickName"
-                value={name}
+                autoComplete="on"
+                name="pwCheck"
+                type="password"
+                className={cx('pw')}
+                placeholder="please password check"
+                required
+                value={pwCheck}
                 onChange={onChange}
               />
             </li>
             <li>
               <input
-                name="profileImage"
-                type="file"
-                className={cx('profile')}
-                value={profileSrc}
+                name="name"
+                type="text"
+                className={cx('name')}
+                placeholder="nickName"
+                required
+                value={displayName}
                 onChange={onChange}
               />
             </li>
@@ -126,9 +164,9 @@ function Form() {
 
       <Modal
         show={show}
-        text={'가입해주셔서 감사합니다. 가입이 완료되었습니다.'}
-        link={links.login}
-        btnText={'로그인 페이지로 이동'}
+        text={modalMessage}
+        link={linkResult}
+        btnText={'확인'}
       />
       <Dimmed show={show} />
     </>

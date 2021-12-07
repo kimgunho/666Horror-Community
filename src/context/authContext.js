@@ -6,6 +6,7 @@ const user = createContext();
 
 export const UserAuthProvider = ({ children }) => {
   const [loginObject, setLoginObject] = useState(undefined);
+  const [nickName, setNickName] = useState(null);
   onAuthStateChanged(auth, (user) => {
     setLoginObject(user);
   });
@@ -15,6 +16,8 @@ export const UserAuthProvider = ({ children }) => {
       value={{
         loginObject,
         setLoginObject,
+        nickName,
+        setNickName,
       }}
     >
       {loginObject === undefined ? null : children}
