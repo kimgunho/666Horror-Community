@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
+import Pagination from '../shared/Pagination';
 import styles from './List.module.scss';
 
 const cx = classNames.bind(styles);
@@ -26,6 +27,7 @@ function List({ data }) {
           </li>
         ))}
       </ul>
+      <Pagination />
     </div>
   );
 }
