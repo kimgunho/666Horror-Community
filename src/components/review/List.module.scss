@@ -1,0 +1,96 @@
+@import '../../common.scss';
+
+.container {
+  margin: 2rem 0;
+
+  > .list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+    width: 100%;
+
+    > li {
+      width: 18%;
+      margin: 0 1% 1% 0;
+      padding: 2rem;
+      box-sizing: border-box;
+      position: relative;
+
+      &:hover {
+        > a {
+          opacity: 0;
+        }
+      }
+      @include middle-deskTop {
+        width: 31%;
+      }
+
+      @include mobile {
+        width: 46%;
+        padding: 1.5rem;
+        margin: 2%;
+
+        &:hover {
+          > a {
+            opacity: 1;
+          }
+        }
+      }
+
+      > a {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.2s ease-in;
+        height: 100%;
+
+        > .info {
+          > .movieTitle {
+            @include font-en;
+            font-size: 0.85rem;
+            color: $text-color-02;
+            padding-bottom: 0.5rem;
+          }
+
+          > .reviewTitle {
+            font-size: 1rem;
+            color: $text-color-01;
+            padding-bottom: 1rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          > .text {
+            @include font-en;
+            font-size: 0.85rem;
+            color: $text-color-01;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* ellipsis line */
+            -webkit-box-orient: vertical;
+          }
+
+          > .writer {
+            font-size: 0.85rem;
+            color: $text-color-01;
+            padding-top: 1rem;
+          }
+        }
+      }
+
+      > .image {
+        @include backgroundCenter;
+        @include absoluteCenter;
+        box-shadow: inset 3rem 3rem 8rem rgba(0, 0, 0, 0.5);
+        border-radius: 2rem;
+        opacity: 0.5;
+      }
+    }
+  }
+}

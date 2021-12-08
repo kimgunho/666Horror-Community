@@ -1,5 +1,6 @@
 $breakpoint-mobile: 740px; // mobile
 $breakpoint-tablet: 1280px; // tablet
+$breakpoint-middle-deskTop: 1720px; // moddle DeskTop
 
 // default colors
 $normalBackground-color: #262c3a;
@@ -48,6 +49,14 @@ $modal-background-color: #3c4656;
   background-position: center center;
 }
 
+@mixin absoluteCenter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
 @mixin bulletDefault {
   margin-left: 1rem;
   cursor: pointer;
@@ -70,6 +79,12 @@ $modal-background-color: #3c4656;
 
 @mixin tablet {
   @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin middle-deskTop {
+  @media screen and (max-width: $breakpoint-middle-deskTop) {
     @content;
   }
 }

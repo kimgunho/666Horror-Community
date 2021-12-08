@@ -13,6 +13,7 @@ import styles from './App.module.scss';
 import Header from './components/shared/Header';
 import Tnb from './components/shared/Tnb';
 import Home from './pages/Home';
+import Review from './pages/review/Review';
 import Login from './components/auth/Login';
 import Sign from './components/auth/Sign';
 
@@ -34,6 +35,9 @@ function App() {
               <Tnb />
               <Routes>
                 <Route path={links.home} element={<Home />} />
+                <Route path={links.review} element={<Review />} />
+                <Route path={links.reviewDetail} element={<Review />} />
+                <Route path={links.reviewWrite} element={<Review />} />
 
                 {isLogin ? (
                   ''
