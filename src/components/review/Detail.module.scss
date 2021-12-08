@@ -1,0 +1,76 @@
+@import '../../common.scss';
+
+.container {
+  margin: 4rem 0;
+
+  @include mobile {
+    margin: 2rem 0;
+  }
+
+  > .limiter {
+    @include limiter;
+
+    > .title {
+      color: $text-color-01;
+      font-size: 1.35rem;
+      line-height: 2;
+    }
+
+    > .movieInfo {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      > .movieTitle {
+        @include font-en;
+        color: $text-color-02;
+        padding-right: 1rem;
+        font-size: 1rem;
+      }
+
+      > .writer {
+        color: $text-color-02;
+        padding-right: 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    > .info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 2rem 0;
+
+      @include tablet {
+        flex-direction: column;
+      }
+
+      > .text {
+        width: 70%;
+        padding: 0 2rem 2rem 0;
+        box-sizing: border-box;
+        color: $text-color-02;
+        line-height: 1.5;
+
+        @include tablet {
+          order: 2;
+          padding: 2rem 0;
+          width: 100%;
+        }
+      }
+
+      > .image {
+        width: 30%;
+
+        @include tablet {
+          width: 50%;
+          order: 1;
+        }
+
+        > img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

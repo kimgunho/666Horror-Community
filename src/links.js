@@ -1,7 +1,7 @@
 export const links = {
   home: '/',
   review: '/review',
-  reviewDetail: '/review/detail',
+  reviewDetail: '/review/:id',
   reviewWrite: '/review/write',
   movies: '/movies',
   community: '/community',

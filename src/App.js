@@ -14,6 +14,8 @@ import Header from './components/shared/Header';
 import Tnb from './components/shared/Tnb';
 import Home from './pages/Home';
 import Review from './pages/review/Review';
+import ReviewDetail from './pages/review/Detail';
+// import ReviewWrite from './pages/review/Write';
 import Login from './components/auth/Login';
 import Sign from './components/auth/Sign';
 
@@ -34,10 +36,10 @@ function App() {
             <div className={cx('content')}>
               <Tnb />
               <Routes>
-                <Route path={links.home} element={<Home />} />
+                <Route exact path={links.home} element={<Home />} />
                 <Route path={links.review} element={<Review />} />
-                <Route path={links.reviewDetail} element={<Review />} />
-                <Route path={links.reviewWrite} element={<Review />} />
+                <Route path={links.reviewDetail} element={<ReviewDetail />} />
+                {/* <Route path={links.reviewWrite} element={<ReviewWrite />} /> */}
 
                 {isLogin ? (
                   ''

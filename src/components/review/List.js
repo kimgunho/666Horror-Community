@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
+import { links } from '../../links';
 
 import Pagination from '../shared/Pagination';
 import styles from './List.module.scss';
@@ -12,7 +13,7 @@ function List({ data }) {
       <ul className={cx('list')}>
         {data.map((item) => (
           <li key={item.id}>
-            <Link to="">
+            <Link to={`${links.review}/${item.id}`}>
               <div className={cx('info')}>
                 <p className={cx('movieTitle')}>{item.movieTitle}</p>
                 <h3 className={cx('reviewTitle')}>{item.reviewTitle}</h3>
