@@ -2,33 +2,17 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import Buttons from '../shared/Buttons';
-import { links } from '../../links';
 import styles from './Detail.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Detail({ id, data }) {
+function Detail({ buttons, id, data }) {
   const [itemObject, setItemObject] = useState(null);
 
   useEffect(() => {
     const activeItem = data.find((object) => object.id === id);
     setItemObject(activeItem);
   }, []);
-
-  const buttons = [
-    {
-      title: '이전글',
-      prev: true,
-    },
-    {
-      title: '다음글',
-      next: true,
-    },
-    {
-      title: '목록',
-      link: links.review,
-    },
-  ];
 
   return (
     <div className={cx('container')}>

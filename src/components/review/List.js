@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { links } from '../../links';
 
+import { auth } from '../../firebase';
+import Button from '../shared/Button';
 import Pagination from '../shared/Pagination';
 import styles from './List.module.scss';
 
@@ -10,6 +12,11 @@ const cx = classNames.bind(styles);
 function List({ data }) {
   return (
     <div className={cx('container')}>
+      {auth.currentUser !== null ? (
+        <Button title={'리뷰 작성'} link={links.reviewWrite} />
+      ) : (
+        <p className={cx('alert')}>리뷰는 로그인을 하여야 작성이 가능합니다.</p>
+      )}
       <ul className={cx('list')}>
         {data.map((item) => (
           <li key={item.id}>

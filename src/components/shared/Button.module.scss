@@ -1,0 +1,10 @@
+@import '../../common.scss';
+
+.button {
+  @include flexCenter;
+  background-color: $point-color-01;
+  color: $text-color-01;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+}

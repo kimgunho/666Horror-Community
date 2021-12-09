@@ -1,19 +1,23 @@
+import React from 'react';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 
+import Button from './Button';
 import styles from './Buttons.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button({ buttons }) {
+function Buttons({ buttons }) {
+  // title : 버튼제목
+  // link : 버튼 링크 : (default : false)
+  // prev : pagination에 사용시 이전페이지 허용 비허용 : boolean (default : false)
+  // next : pagination에 사용시 다음페이지 허용 비허용 : boolean (default : false)
+
   return (
     <ul className={cx('btns')}>
       {buttons.map(({ title, link = false }, index) => {
         return (
           <li key={index}>
-            <Link className={cx('button')} to={link}>
-              {title}
-            </Link>
+            <Button link={link} title={title} />
           </li>
         );
       })}
@@ -21,4 +25,4 @@ function Button({ buttons }) {
   );
 }
 
-export default Button;
+export default Buttons;

@@ -3,12 +3,18 @@
 .container {
   margin: 2rem 0;
 
+  > .alert {
+    font-size: 0.85rem;
+    color: $point-color-02;
+  }
+
   > .list {
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
     flex-wrap: wrap;
     width: 100%;
+    margin: 2rem 0;
 
     > li {
       width: 18%;
