@@ -61,7 +61,7 @@ function Login() {
             break;
 
           default:
-            alert(`${error} 재접속을 해주세요.`);
+            alert(`${error.code} 재접속을 해주세요.`);
         }
 
         redirect = links.login;
@@ -82,7 +82,7 @@ function Login() {
             <li>
               <input
                 name="email"
-                type="text"
+                type="email"
                 className={cx('id')}
                 placeholder="email"
                 required
