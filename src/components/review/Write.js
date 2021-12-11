@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { onAuthStateChanged } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
+import { links } from '../../links';
 import styles from './Write.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Write() {
   const [nickName, setNickName] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -16,6 +20,28 @@ function Write() {
     });
   });
 
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const id = auth.currentUser.uid.substring(0, 8) + new Date().getTime();
+      await setDoc(doc(db, 'review', id), {
+        title: title.current.value,
+        movieTitle: movieTitle.current.value,
+        text: text.current.value,
+        date: Date.now(),
+        uid: auth.currentUser.uid,
+        name: auth.currentUser.displayName,
+        id: id,
+      });
+      navigate(links.review);
+    } catch (error) {
+      console.log(error.code);
+    }
+  };
+
+  const title = useRef();
+  const movieTitle = useRef();
+  const text = useRef();
   return (
     <div className={cx('container')}>
       <div className={cx('limiter')}>
@@ -24,11 +50,12 @@ function Write() {
           작성해주세요
         </h2>
 
-        <form>
+        <form onSubmit={onSubmit}>
           <ul className={cx('signup')}>
             <li>
               <label>제목을 작성해주세요.</label>
               <input
+                ref={title}
                 type="text"
                 required
                 name="title"
@@ -39,6 +66,7 @@ function Write() {
             <li>
               <label>영화 제목을 작성해주세요.</label>
               <input
+                ref={movieTitle}
                 type="text"
                 required
                 name="movie"
@@ -47,7 +75,7 @@ function Write() {
             </li>
             <li>
               <label>내용을 작성해주세요.</label>
-              <textarea></textarea>
+              <textarea ref={text}></textarea>
             </li>
             <li>
               <label className={cx('fileLabel')} htmlFor="file">
