@@ -2,4 +2,78 @@
 
 .container {
   margin: 2rem 0;
+
+  > .limiter {
+    @include limiter;
+
+    > .title {
+      color: $text-color-01;
+      font-size: 1.35rem;
+      font-weight: 300;
+      line-height: 2;
+      border-bottom: 1px solid $deepBackground-color;
+      margin-bottom: 2rem;
+
+      > .user {
+        color: $point-color-02;
+        font-weight: bold;
+        padding-right: 5px;
+      }
+    }
+
+    .signup {
+      width: 100%;
+      margin: 2rem 0;
+
+      > li {
+        padding-bottom: 2rem;
+
+        > label {
+          display: block;
+          font-size: 1rem;
+          color: $text-color-02;
+          line-height: 2;
+
+          &.fileLabel {
+            max-width: fit-content;
+            background-color: $point-color-01;
+            padding: 0.2rem 1rem;
+            border-radius: 1rem;
+            cursor: pointer;
+          }
+        }
+
+        > input {
+          box-sizing: border-box;
+          width: 100%;
+          border: 0;
+          padding: 0.5rem;
+          color: $text-color-03;
+          font-size: 1rem;
+          max-width: 800px;
+
+          &.file {
+            display: none;
+          }
+        }
+
+        > textarea {
+          border: 0;
+          width: 100%;
+          box-sizing: border-box;
+          min-height: 350px;
+          padding: 0.5rem;
+          color: $text-color-03;
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .submit {
+      @include button;
+      float: right;
+      background-color: $point-color-02;
+      color: $text-color-01;
+    }
+  }
 }
