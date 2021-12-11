@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, NavLink } from 'react-router-dom';
 import { FiAlignLeft, FiX, FiLogIn, FiLogOut } from 'react-icons/fi';
@@ -15,17 +15,17 @@ import logo from '../../assets/images/component/logo.png';
 const cx = classNames.bind(styles);
 
 function Header() {
-  const [toggle, setToggle] = useState(false);
-  const { loginObject, setLoginObject } = UseUserAuth();
+  const [mobileIcon, setMobileIcon] = useState(false);
+  const { userInfo, setUserInfo } = UseUserAuth();
 
   const handleLogOut = () => {
     signOut(auth)
       .then(() => {
         const user = auth.currentUser;
-        setLoginObject(user);
+        setUserInfo(user);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -41,10 +41,13 @@ function Header() {
           </span>
         </Link>
       </h1>
-      <div className={cx('mobileBtn')} onClick={() => setToggle(!toggle)}>
-        {toggle ? <FiX size={32} /> : <FiAlignLeft size={32} />}
+      <div
+        className={cx('mobileBtn')}
+        onClick={() => setMobileIcon(!mobileIcon)}
+      >
+        {mobileIcon ? <FiX size={32} /> : <FiAlignLeft size={32} />}
       </div>
-      <ul className={cx(['gnb', { on: toggle }])}>
+      <ul className={cx(['gnb', { on: mobileIcon }])}>
         {gnb.map((menu, index) => (
           <li key={index}>
             <NavLink
@@ -56,7 +59,7 @@ function Header() {
             </NavLink>
           </li>
         ))}
-        {!loginObject ? (
+        {!userInfo ? (
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? cx('active') : '')}

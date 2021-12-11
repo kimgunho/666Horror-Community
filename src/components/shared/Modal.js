@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from './Modal.module.scss';
-import { UseCurrentModal } from '../../context/modalContext';
+import { UseModalContext } from '../../context/modalContext';
 
 const cx = classNames.bind(styles);
 
 function Modal({ show, text, link, btnText }) {
-  const { setShow } = UseCurrentModal();
+  const { setShow } = UseModalContext();
   const navigate = useNavigate();
 
   const onPageLocation = () => {

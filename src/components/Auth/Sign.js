@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
-import { UseCurrentModal } from '../../context/modalContext';
+import { UseModalContext } from '../../context/modalContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
 import Modal from '../shared/Modal';
@@ -14,15 +13,15 @@ import styles from './Auth.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Form() {
+function Signin() {
   const [email, setEmail] = useState('');
-  const [pw, setPw] = useState('');
-  const [pwCheck, setPwCheck] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [modalMessage, setModalMessage] = useState(null);
+  const [message, setMessage] = useState(null);
   const [linkResult, setLinkResult] = useState(null);
 
-  const { show, setShow } = UseCurrentModal();
+  const { show, setShow } = UseModalContext();
 
   const onChange = (event) => {
     const {
@@ -33,18 +32,18 @@ function Form() {
       case 'email':
         setEmail(value);
         break;
-      case 'pw':
-        setPw(value);
+      case 'password':
+        setPassword(value);
         break;
-      case 'pwCheck':
-        setPwCheck(value);
+      case 'passwordCheck':
+        setPasswordCheck(value);
         break;
       case 'name':
         setDisplayName(value);
         break;
 
       default:
-        console.log('err');
+        console.log('error');
     }
   };
 
@@ -54,8 +53,8 @@ function Form() {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (pw === pwCheck) {
-      createUserWithEmailAndPassword(auth, email, pw)
+    if (password === passwordCheck) {
+      createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
 
@@ -63,29 +62,28 @@ function Form() {
             displayName: displayName,
           })
             .then(() => {})
-            .catch((err) => {
-              console.dir(err);
+            .catch((error) => {
+              console.dir(error);
             });
 
           redirect = links.home;
         })
-        .catch((err) => {
-          console.dir(err.code);
-          setShow(true);
+        .catch((error) => {
+          if (error.code === 'auth/email-already-in-use') {
+            setMessage('이미 사용중인 이메일입니다.');
+          } else if (error.code === 'auth/invalid-email') {
+            setMessage('적합하지 않는 이메일입니다');
+          }
           redirect = links.signin;
           setLinkResult(links.signin);
-          if (err.code === 'auth/email-already-in-use') {
-            setModalMessage('이미 사용중인 이메일입니다.');
-          } else if (err.code === 'auth/invalid-email') {
-            setModalMessage('적합하지 않는 이메일입니다');
-          }
+          setShow(true);
         })
         .finally(() => {
           navigate(redirect);
         });
     } else {
       setLinkResult(links.signin);
-      setModalMessage('비밀번호 중복체크를 다시 부탁드리겠습니다.');
+      setMessage('비밀번호 중복체크를 다시 부탁드리겠습니다.');
       setShow(true);
     }
   };
@@ -110,24 +108,24 @@ function Form() {
             <li>
               <input
                 autoComplete="on"
-                name="pw"
+                name="password"
                 type="password"
-                className={cx('pw')}
+                className={cx('password')}
                 placeholder="password"
                 required
-                value={pw}
+                value={password}
                 onChange={onChange}
               />
             </li>
             <li>
               <input
                 autoComplete="on"
-                name="pwCheck"
+                name="passwordCheck"
                 type="password"
-                className={cx('pw')}
+                className={cx('password')}
                 placeholder="please password check"
                 required
-                value={pwCheck}
+                value={passwordCheck}
                 onChange={onChange}
               />
             </li>
@@ -162,15 +160,10 @@ function Form() {
         </form>
       </div>
 
-      <Modal
-        show={show}
-        text={modalMessage}
-        link={linkResult}
-        btnText={'확인'}
-      />
+      <Modal show={show} text={message} link={linkResult} btnText={'확인'} />
       <Dimmed show={show} />
     </>
   );
 }
 
-export default Form;
+export default Signin;

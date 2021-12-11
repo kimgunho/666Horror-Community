@@ -1,5 +1,3 @@
-import React from 'react';
-
 import HOME_TEMP_DATA from '../assets/data/homeTemp';
 
 import Banner from '../components/home/Banner';

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { UseUserAuth } from '../../context/authContext';
-import { UseCurrentModal } from '../../context/modalContext';
+import { UseModalContext } from '../../context/modalContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
 import Modal from '../shared/Modal';
@@ -17,12 +16,12 @@ const cx = classNames.bind(styles);
 
 function Login() {
   const [email, setEmail] = useState('');
-  const [pw, setPw] = useState('');
-  const [modalMessage, setModalMessage] = useState(null);
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState(null);
   const [linkResult, setLinkResult] = useState(null);
 
-  const { setLoginObject } = UseUserAuth();
-  const { show, setShow } = UseCurrentModal();
+  const { setUserInfo } = UseUserAuth();
+  const { show, setShow } = UseModalContext();
 
   const onChange = (event) => {
     const {
@@ -33,11 +32,11 @@ function Login() {
       case 'email':
         setEmail(value);
         break;
-      case 'pw':
-        setPw(value);
+      case 'password':
+        setPassword(value);
         break;
       default:
-        console.log('err');
+        console.log('error');
     }
   };
 
@@ -47,30 +46,30 @@ function Login() {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, pw)
+    signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        setLoginObject(auth.currentUser);
+        setUserInfo(auth.currentUser);
         redirect = links.home;
       })
-      .catch((err) => {
-        redirect = links.login;
-        setShow(true);
-        setLinkResult(links.login);
-
-        switch (err.code) {
+      .catch((error) => {
+        switch (error.code) {
           case 'auth/wrong-password':
-            setModalMessage('비밀번호가 정확하지 않습니다.');
+            setMessage('비밀번호가 정확하지 않습니다.');
             break;
           case 'auth/user-not-found':
-            setModalMessage('사용자를 찾을수가 없습니다.');
+            setMessage('사용자를 찾을수가 없습니다.');
             break;
           case 'auth/invalid-email':
-            setModalMessage('잘못된 형식입니다.');
+            setMessage('잘못된 형식입니다.');
             break;
 
           default:
-            alert(`${err} 재접속을 해주세요.`);
+            alert(`${error} 재접속을 해주세요.`);
         }
+
+        redirect = links.login;
+        setShow(true);
+        setLinkResult(links.login);
       })
       .finally(() => {
         navigate(redirect);
@@ -97,12 +96,12 @@ function Login() {
             <li>
               <input
                 autoComplete="on"
-                name="pw"
+                name="password"
                 type="password"
-                className={cx('pw')}
+                className={cx('password')}
                 placeholder="password"
                 required
-                value={pw}
+                value={password}
                 onChange={onChange}
               />
             </li>
@@ -121,12 +120,7 @@ function Login() {
           </ul>
         </form>
       </div>
-      <Modal
-        show={show}
-        text={modalMessage}
-        link={linkResult}
-        btnText={'확인'}
-      />
+      <Modal show={show} text={message} link={linkResult} btnText={'확인'} />
       <Dimmed show={show} />
     </>
   );

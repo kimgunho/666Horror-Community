@@ -1,8 +1,8 @@
-import React, { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext } from 'react';
 
 const modal = createContext();
 
-export const CurrentModalProvider = ({ children }) => {
+export const ModalProvider = ({ children }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -17,6 +17,6 @@ export const CurrentModalProvider = ({ children }) => {
   );
 };
 
-export const UseCurrentModal = () => {
+export const UseModalContext = () => {
   return useContext(modal);
 };

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
-import Detail from '../../components/review/Detail';
 import { links } from '../../links';
+import Detail from '../../components/review/Detail';
 
 import TEMP_DATA from '../../assets/data/homeTemp';
 

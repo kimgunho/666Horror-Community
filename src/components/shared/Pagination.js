@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 

@@ -1,3 +1,4 @@
+import { useRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
 import { Autoplay, Pagination, EffectFade } from 'swiper';
@@ -9,7 +10,15 @@ import styles from './Banner.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Main({ data }) {
+function Banner({ data }) {
+  const [pagination, setPaginaiton] = useState(null);
+  const paginationRef = useRef();
+
+  useEffect(() => {
+    const paginaitonClass = paginationRef.current.className;
+    setPaginaiton(paginaitonClass);
+  }, []);
+
   return (
     <div className={cx('container')}>
       <Swiper
@@ -18,7 +27,7 @@ function Main({ data }) {
         autoplay={{ delay: 3000 }}
         pagination={{
           clickable: true,
-          el: cx('.Main_pagination__2IYXD'),
+          el: `.${pagination}`,
           renderBullet: (index, className) => {
             return `<span class='${className}'>${index + 1}</span>`;
           },
@@ -29,7 +38,7 @@ function Main({ data }) {
         effect="fade"
         speed={1000}
       >
-        <div className={cx('pagination')} />
+        <div className={cx('pagination')} ref={paginationRef} />
         {data.map(({ id, image, movieTitle, reviewTitle, text }) => {
           data.splice(4, 4);
 
@@ -52,4 +61,4 @@ function Main({ data }) {
   );
 }
 
-export default Main;
+export default Banner;

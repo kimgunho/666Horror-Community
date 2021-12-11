@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import { links } from './links';
-import { UserAuthProvider } from './context/authContext';
-import { CurrentModalProvider } from './context/modalContext';
-import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+
+import { UserAuthProvider } from './context/authContext';
+import { ModalProvider } from './context/modalContext';
+import { auth } from './firebase';
+import { links } from './links';
 
 import styles from './App.module.scss';
 
@@ -24,11 +24,11 @@ const cx = classNames.bind(styles);
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   onAuthStateChanged(auth, (user) => {
-    user ? setIsLogin(true) : setIsLogin(false);
+    user !== null ? setIsLogin(true) : setIsLogin(false);
   });
 
   return (
-    <CurrentModalProvider>
+    <ModalProvider>
       <UserAuthProvider>
         <BrowserRouter>
           <div className={cx('wrapper')}>
@@ -63,7 +63,7 @@ function App() {
           </div>
         </BrowserRouter>
       </UserAuthProvider>
-    </CurrentModalProvider>
+    </ModalProvider>
   );
 }
 
