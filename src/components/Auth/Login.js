@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import { UseUserAuth } from '../../context/authContext';
 import { UseModalContext } from '../../context/modalContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
@@ -20,7 +19,6 @@ function Login() {
   const [message, setMessage] = useState(null);
   const [linkResult, setLinkResult] = useState(null);
 
-  const { setUserInfo } = UseUserAuth();
   const { show, setShow } = UseModalContext();
 
   const onChange = (event) => {
@@ -48,7 +46,6 @@ function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        setUserInfo(auth.currentUser);
         redirect = links.home;
       })
       .catch((error) => {

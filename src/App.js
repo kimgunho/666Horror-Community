@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 
-import { UserAuthProvider } from './context/authContext';
 import { ModalProvider } from './context/modalContext';
 import { auth } from './firebase';
 import { links } from './links';
@@ -29,40 +28,38 @@ function App() {
 
   return (
     <ModalProvider>
-      <UserAuthProvider>
-        <BrowserRouter>
-          <div className={cx('wrapper')}>
-            <Header />
-            <div className={cx('content')}>
-              <Tnb />
-              <Routes>
-                <Route exact path={links.home} element={<Home />} />
-                <Route path={links.review} element={<Review />} />
-                <Route path={links.reviewDetail} element={<ReviewDetail />} />
-                <Route path={links.reviewWrite} element={<ReviewWrite />} />
+      <BrowserRouter>
+        <div className={cx('wrapper')}>
+          <Header />
+          <div className={cx('content')}>
+            <Tnb />
+            <Routes>
+              <Route exact path={links.home} element={<Home />} />
+              <Route path={links.review} element={<Review />} />
+              <Route path={links.reviewDetail} element={<ReviewDetail />} />
+              <Route path={links.reviewWrite} element={<ReviewWrite />} />
 
-                {isLogin ? (
-                  ''
-                ) : (
-                  <>
-                    <Route path={links.login} element={<Login />} />
-                    <Route path={links.signin} element={<Sign />} />
-                  </>
-                )}
+              {isLogin ? (
+                ''
+              ) : (
+                <>
+                  <Route path={links.login} element={<Login />} />
+                  <Route path={links.signin} element={<Sign />} />
+                </>
+              )}
 
-                <Route
-                  path={links.notFound}
-                  element={
-                    <div className={cx('notFound')}>
-                      존재하지 않는 페이지입니다.
-                    </div>
-                  }
-                />
-              </Routes>
-            </div>
+              <Route
+                path={links.notFound}
+                element={
+                  <div className={cx('notFound')}>
+                    존재하지 않는 페이지입니다.
+                  </div>
+                }
+              />
+            </Routes>
           </div>
-        </BrowserRouter>
-      </UserAuthProvider>
+        </div>
+      </BrowserRouter>
     </ModalProvider>
   );
 }

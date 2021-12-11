@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { Link, NavLink } from 'react-router-dom';
 import { FiAlignLeft, FiX, FiLogIn, FiLogOut } from 'react-icons/fi';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 
-import { UseUserAuth } from '../../context/authContext';
 import { links } from '../../links';
 import { auth } from '../../firebase';
 import gnb from '../../assets/data/gnb';
@@ -16,18 +15,31 @@ const cx = classNames.bind(styles);
 
 function Header() {
   const [mobileIcon, setMobileIcon] = useState(false);
-  const { userInfo, setUserInfo } = UseUserAuth();
+  const [userInfo, setUserInfo] = useState(null);
+  const [loginText, setLoginText] = useState('');
+  const [loginIcon, setLoginIcon] = useState('');
 
   const handleLogOut = () => {
     signOut(auth)
-      .then(() => {
-        const user = auth.currentUser;
-        setUserInfo(user);
-      })
+      .then(() => {})
       .catch((error) => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserInfo(user);
+        setLoginText('log out');
+        setLoginIcon(<FiLogOut />);
+      } else {
+        setUserInfo(null);
+        setLoginText('login');
+        setLoginIcon(<FiLogIn />);
+      }
+    });
+  }, []);
 
   return (
     <header className={cx('header')}>
@@ -59,28 +71,22 @@ function Header() {
             </NavLink>
           </li>
         ))}
-        {!userInfo ? (
-          <li>
+        <li>
+          {!userInfo ? (
             <NavLink
               className={({ isActive }) => (isActive ? cx('active') : '')}
               to={links.login}
             >
-              <span className={cx('icon')}>
-                <FiLogIn />
-              </span>
-              <span className={cx('title')}>Login</span>
+              <span className={cx('icon')}>{loginIcon}</span>
+              <span className={cx('title')}>{loginText}</span>
             </NavLink>
-          </li>
-        ) : (
-          <li>
-            <NavLink to={links.home} onClick={handleLogOut}>
-              <span className={cx('icon')}>
-                <FiLogOut />
-              </span>
-              <span className={cx('title')}>Log Out</span>
-            </NavLink>
-          </li>
-        )}
+          ) : (
+            <Link to={links.home} onClick={handleLogOut}>
+              <span className={cx('icon')}>{loginIcon}</span>
+              <span className={cx('title')}>{loginText}</span>
+            </Link>
+          )}
+        </li>
       </ul>
     </header>
   );
