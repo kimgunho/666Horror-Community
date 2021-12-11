@@ -1,9 +1,12 @@
-import List from '../../components/review/List';
+import { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
 
+import List from '../../components/review/List';
+import { db } from '../../firebase';
 import { links } from '../../links';
-import HOME_TEMP_DATA from '../../assets/data/homeTemp';
 
 function Review() {
+  const [items, setItems] = useState([]);
   const buttons = [
     {
       title: '리뷰 작성',
@@ -12,9 +15,20 @@ function Review() {
     },
   ];
 
+  useEffect(() => {
+    getCollection();
+  }, []);
+
+  const getCollection = async () => {
+    const querySnapshot = await getDocs(collection(db, 'review'));
+    querySnapshot.forEach((item) => {
+      return setItems((prev) => [...prev, item.data()]);
+    });
+  };
+
   return (
     <>
-      <List buttons={buttons} data={HOME_TEMP_DATA} />
+      <List buttons={buttons} data={items} />
     </>
   );
 }

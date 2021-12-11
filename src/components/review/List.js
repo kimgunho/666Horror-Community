@@ -23,9 +23,9 @@ function List({ data }) {
             <Link to={`${links.review}/${item.id}`}>
               <div className={cx('info')}>
                 <p className={cx('movieTitle')}>{item.movieTitle}</p>
-                <h3 className={cx('reviewTitle')}>{item.reviewTitle}</h3>
+                <h3 className={cx('reviewTitle')}>{item.title}</h3>
                 <p className={cx('text')}>{item.text}...</p>
-                <p className={cx('writer')}>작성자 : writer</p>
+                <p className={cx('writer')}>by {item.name}</p>
               </div>
             </Link>
             <div
