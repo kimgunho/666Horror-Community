@@ -15,8 +15,8 @@ import Home from './pages/Home';
 import Review from './pages/review/Review';
 import ReviewDetail from './pages/review/Detail';
 import ReviewWrite from './pages/review/Write';
-import Login from './components/auth22/Login22';
-import Sign from './components/auth22/Sign';
+import Login from './components/auth/Login';
+import Sign from './components/auth/Sign';
 
 const cx = classNames.bind(styles);
 
