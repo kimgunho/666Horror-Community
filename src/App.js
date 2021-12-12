@@ -15,7 +15,7 @@ import Home from './pages/Home';
 import Review from './pages/review/Review';
 import ReviewDetail from './pages/review/Detail';
 import ReviewWrite from './pages/review/Write';
-import Login from './components/auth/Login22';
+// import Login from './components/auth/Login22';
 import Sign from './components/auth/Sign';
 
 const cx = classNames.bind(styles);
@@ -43,7 +43,7 @@ function App() {
                 ''
               ) : (
                 <>
-                  <Route path={links.login} element={<Login />} />
+                  {/* <Route path={links.login} element={<Login />} /> */}
                   <Route path={links.signin} element={<Sign />} />
                 </>
               )}
