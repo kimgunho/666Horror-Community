@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, Timestamp } from 'firebase/firestore';
 
 import { auth, db } from '../../firebase';
 import { links } from '../../links';
@@ -28,7 +28,7 @@ function Write() {
         title: title.current.value,
         movieTitle: movieTitle.current.value,
         text: text.current.value,
-        date: Date.now(),
+        date: Timestamp.fromDate(new Date()).toDate(),
         uid: auth.currentUser.uid,
         name: auth.currentUser.displayName,
         id: id,
